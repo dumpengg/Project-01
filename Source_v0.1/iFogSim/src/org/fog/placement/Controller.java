@@ -154,17 +154,18 @@ public class Controller extends SimEntity{
 		System.out.println("APPLICATION LOOP DELAYS");
 		System.out.println("=========================================");
 		for(Integer loopId : TimeKeeper.getInstance().getLoopIdToTupleIds().keySet()){
-			/*double average = 0, count = 0;
+			double totalDelay = 0.0;
+			int count = 0;
 			for(int tupleId : TimeKeeper.getInstance().getLoopIdToTupleIds().get(loopId)){
-				Double startTime = 	TimeKeeper.getInstance().getEmitTimes().get(tupleId);
-				Double endTime = 	TimeKeeper.getInstance().getEndTimes().get(tupleId);
-				if(startTime == null || endTime == null)
-					break;
-				average += endTime-startTime;
-				count += 1;
+				Double startTime = TimeKeeper.getInstance().getEmitTimes().get(tupleId);
+				Double endTime = TimeKeeper.getInstance().getEndTimes().get(tupleId);
+				if(startTime != null && endTime != null) {
+					totalDelay += (endTime - startTime);
+					count++;
+				}
 			}
-			System.out.println(getStringForLoopId(loopId) + " ---> "+(average/count));*/
-			System.out.println(getStringForLoopId(loopId) + " ---> "+TimeKeeper.getInstance().getLoopIdToCurrentAverage().get(loopId));
+			double average = (count > 0) ? totalDelay / count : 0.0;
+			System.out.println(getStringForLoopId(loopId) + " ---> " + average);
 		}
 		System.out.println("=========================================");
 		System.out.println("TUPLE CPU EXECUTION DELAY");
